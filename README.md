@@ -10,9 +10,6 @@ This repository contains benchmark scripts and instructions which were used in m
   - [1. Startup Test](#1-startup-test)
   - [2. CPU-Bound Calculation](#2-cpu-bound-calculation)
   - [3. HTTP Server Test](#3-http-server-test)
-- [Configuring Test Parameters](#configuring-test-parameters)
-- [Interpreting Results](#interpreting-results)
-- [Troubleshooting](#troubleshooting)
 
 ## Overview
 
@@ -38,3 +35,28 @@ The results can help you see which runtime might be more suitable for certain wo
 
 Ensure you have each runtime installed and accessible from the command line (`node`, `deno`, `bun`).  
 For `wrk`, refer to [wrk’s official repository](https://github.com/wg/wrk) on how to install.
+
+## Installation
+1. **Clone this repository**:
+   ```bash
+   git clone https://github.com/YourUsername/js-runtimes-benchmark.git
+   cd js-runtimes-benchmark
+
+## Running the Benchmarks
+1. Startup Test
+   ```bash
+   hyperfine -warmup 5 -min-runs 10 -i ’node startup.js’ ’deno startup.ts’ ’bun startup.js’
+2. CPU-Bound Performance
+   ```bash
+   hyperfine -warmup 10 -min-runs 10 -i ’node cpu_bound.js’ ’deno cpu_bound.js’ ’bun cpu_bound.js’
+3. I/O-Bound Performance
+   ```bash
+   wrk -t12 -c400 -d30s http://localhost:3000/
+   ```   
+   Then run in a separate terminal
+   
+   ```bash
+   node node_server.js
+   ```
+   repeat the **wrk** command but with different port number for other two runtime **deno** and **bun**
+   also start each separatly in a different terminal.
